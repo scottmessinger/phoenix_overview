@@ -40,6 +40,13 @@ let App = {
       .receive("ok", () => { })
       .receive("error", reason => console.log("error!", reason) )
 
+    docChan.on("messages", ({messages}) => {
+      messages.reverse().forEach( msg => {
+        this.appendMessage(msg, msgContainer, docChan)
+      })
+    })
+
+
 
     let authorInput = $("#document_author")
     authorInput.val("user-" + Math.floor(Math.random() * 1000))
@@ -50,7 +57,13 @@ let App = {
       docChan.push("new_message", {body: msgInput.val()})
       msgInput.val("")
     })
+  },
+
+  appendMessage(msg, msgContainer, docChan){
+    msgContainer.append(`<br/>${msg.body}`)
+    msgContainer.scrollTop(msgContainer.prop("scrollHeight"))
   }
+
 }
 
 App.init()
