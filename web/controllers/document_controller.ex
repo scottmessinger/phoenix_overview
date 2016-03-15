@@ -3,26 +3,21 @@ defmodule Docs.DocumentController do
 
   alias Docs.Document
 
-  plug :scrub_params, "document" when action in [:create, :update]
+  plug :scrub_params, "document" when action in [:update]
 
   def index(conn, _params) do
     documents = Repo.all(Document)
     render(conn, "index.html", documents: documents)
   end
 
-  def new(conn, _params) do
-    changeset = Document.changeset(%Document{})
-    render(conn, "new.html", changeset: changeset)
-  end
-
-  def create(conn, %{"document" => document_params}) do
-    changeset = Document.changeset(%Document{}, document_params)
+  def create(conn, _) do
+    changeset = Document.changeset(%Document{}, %{title: "A New Document!"})
 
     case Repo.insert(changeset) do
-      {:ok, _document} ->
+      {:ok, document} ->
         conn
         |> put_flash(:info, "Document created successfully.")
-        |> redirect(to: document_path(conn, :index))
+        |> redirect(to: document_path(conn, :edit, document))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end

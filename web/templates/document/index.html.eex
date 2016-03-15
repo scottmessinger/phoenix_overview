@@ -27,4 +27,6 @@
   </tbody>
 </table>
 
-<%= link "New document", to: document_path(@conn, :new) %>
+<%= form_for Docs.Document.changeset(%Docs.Document{}), "/documents", fn f -> %>
+  <%= submit "Create", class: "btn btn-primary" %>
+<% end %>

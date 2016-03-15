@@ -9,8 +9,8 @@ defmodule Docs.Document do
     timestamps
   end
 
-  @required_fields ~w(body title author)
-  @optional_fields ~w()
+  @required_fields ~w()
+  @optional_fields ~w(body title author)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
