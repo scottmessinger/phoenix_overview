@@ -79,6 +79,36 @@ let App = {
       editor.updateContents(ops)
     })
 
+    let multiCursor = editor.addModule("multi-cursor", {
+      timeout: 1000000000
+    })
+
+    editor.on("selection-change", range => {
+      if(!range){ return }
+
+      multiCursor.setCursor(
+        authorInput.val(),
+        range.end,
+        authorInput.val(),
+        'rgb(255, 0, 255)'
+      )
+      docChan.push("selection_change", {
+        user_id: authorInput.val(),
+        end: range.end,
+        username: authorInput.val(),
+        color: 'rgb(255, 0, 255)'
+      })
+    })
+
+    docChan.on("selection_change", ({user_id, end, username, color}) => {
+      multiCursor.setCursor(
+        user_id,
+        end,
+        username,
+        color
+      )
+    })
+
 
   },
 
