@@ -6,12 +6,6 @@
   <% end %>
 
   <div class="form-group">
-    <%= label f, :body, class: "control-label" %>
-    <%= text_input f, :body, class: "form-control" %>
-    <%= error_tag f, :body %>
-  </div>
-
-  <div class="form-group">
     <%= label f, :title, class: "control-label" %>
     <%= text_input f, :title, class: "form-control" %>
     <%= error_tag f, :title %>
@@ -22,6 +16,13 @@
     <%= text_input f, :author, class: "form-control" %>
     <%= error_tag f, :author %>
   </div>
+
+  <div class="form-group">
+    <div id="editor" class="form-control" style="height: 400px;">
+      <%= raw @changeset.model.body %>
+    </div>
+  </div>
+
 
   <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>

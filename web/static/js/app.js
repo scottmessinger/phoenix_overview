@@ -51,7 +51,6 @@ let App = {
     })
 
 
-
     let authorInput = $("#document_author")
     authorInput.val("user-" + Math.floor(Math.random() * 1000))
     let msgContainer = $("#messages")
@@ -61,7 +60,29 @@ let App = {
       docChan.push("new_message", {body: msgInput.val()})
       msgInput.val("")
     })
+
+    /**
+     * Quill
+     */
+     let editor = new Quill("#editor")
+     let saveTimer = null
+     editor.on("text-change", (ops, source) => {
+       if(source !== "user"){ return }
+       clearTimeout(saveTimer)
+       saveTimer = setTimeout(() => {
+         this.save(docChan, editor)
+       }, 2500)
+     })
+
   },
+
+  save(docChan, editor){
+    let body = editor.getHTML()
+    let title = $("#document_title").val()
+    docChan.push("save", {body: body, title: title})
+    .receive("ok", () => console.log("saved!") )
+  },
+
 
   appendMessage(msg, msgContainer, docChan){
     msgContainer.append(`<br/>${msg.body}`)
