@@ -46,6 +46,10 @@ let App = {
       })
     })
 
+    docChan.on("new_message", msg => {
+      this.appendMessage(msg, msgContainer, docChan)
+    })
+
 
 
     let authorInput = $("#document_author")
