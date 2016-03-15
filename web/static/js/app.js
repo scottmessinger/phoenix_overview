@@ -36,6 +36,11 @@ let App = {
 
     let docChan = socket.channel("documents:" + docId)
 
+    docChan.join()
+      .receive("ok", () => { })
+      .receive("error", reason => console.log("error!", reason) )
+
+
     let authorInput = $("#document_author")
     authorInput.val("user-" + Math.floor(Math.random() * 1000))
     let msgContainer = $("#messages")
