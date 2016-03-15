@@ -18,13 +18,13 @@
       <td><%= message.document_id %></td>
 
       <td class="text-right">
-        <%= link "Show", to: message_path(@conn, :show, message), class: "btn btn-default btn-xs" %>
-        <%= link "Edit", to: message_path(@conn, :edit, message), class: "btn btn-default btn-xs" %>
-        <%= link "Delete", to: message_path(@conn, :delete, message), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        <%= link "Show", to: document_message_path(@conn, :show, @document, message), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: document_message_path(@conn, :edit, @document, message), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: document_message_path(@conn, :delete, @document, message), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 
-<%= link "New message", to: message_path(@conn, :new) %>
+<%= link "New message", to: document_message_path(@conn, :new, @document) %>
