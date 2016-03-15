@@ -5,6 +5,7 @@ defmodule Docs.Document do
     field :body, :string
     field :title, :string
     field :author, :string
+    has_many :messages, Docs.Message
 
     timestamps
   end
