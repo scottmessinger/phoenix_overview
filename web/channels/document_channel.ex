@@ -50,6 +50,14 @@ defmodule Docs.DocumentChannel do
     end
   end
 
+  def handle_in("text_change", %{"ops" => ops}, socket) do
+    broadcast_from! socket, "text_change", %{
+      ops: ops
+    }
+    {:reply, :ok, socket}
+  end
+
+
 
 
 

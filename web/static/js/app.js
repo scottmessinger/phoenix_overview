@@ -64,15 +64,21 @@ let App = {
     /**
      * Quill
      */
-     let editor = new Quill("#editor")
-     let saveTimer = null
-     editor.on("text-change", (ops, source) => {
-       if(source !== "user"){ return }
-       clearTimeout(saveTimer)
-       saveTimer = setTimeout(() => {
-         this.save(docChan, editor)
-       }, 2500)
-     })
+    let editor = new Quill("#editor")
+    let saveTimer = null
+    editor.on("text-change", (ops, source) => {
+      if(source !== "user"){ return }
+      clearTimeout(saveTimer)
+      saveTimer = setTimeout(() => {
+        this.save(docChan, editor)
+      }, 2500)
+      docChan.push("text_change", {ops: ops})
+    })
+
+    docChan.on("text_change", ({ops}) => {
+      editor.updateContents(ops)
+    })
+
 
   },
 
