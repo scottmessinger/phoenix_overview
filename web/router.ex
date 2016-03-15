@@ -18,6 +18,7 @@ defmodule Docs.Router do
 
     get "/", PageController, :index
     resources "/documents", DocumentController
+    resources "/messages", MessageController
   end
 
   # Other scopes may use custom stacks.
