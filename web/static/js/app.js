@@ -33,12 +33,16 @@ let App = {
   init(){
     let docId = $("#doc-form").data("id")
     if(!docId){ return }
+
+    let docChan = socket.channel("documents:" + docId)
+
     let authorInput = $("#document_author")
     authorInput.val("user-" + Math.floor(Math.random() * 1000))
     let msgContainer = $("#messages")
     let msgInput = $("#message-input")
 
     msgInput.on("keypress", e => { if(e.which !== 13){ return }
+      docChan.push("new_message", {body: msgInput.val()})
       msgInput.val("")
     })
   }
