@@ -20,6 +20,25 @@ defmodule Docs.DocumentChannel do
   end
 
 
+  def handle_in("new_message", params, socket) do
+    changeset =
+      Docs.Document
+      |> Docs.Repo.get(socket.assigns.doc_id)
+      |> Ecto.Model.build(:messages)
+      |> Docs.Message.changeset(params)
+
+    case Docs.Repo.insert(changeset) do
+      {:ok, msg} ->
+        broadcast! socket, "new_message", %{body: msg.body}
+        {:reply, :ok, socket}
+
+      {:error, changeset} ->
+        {:reply, {:error, %{reasons: changeset}}, socket}
+    end
+  end
+
+
+
   # Channels can be used in a request/response fashion
   # by sending replies to requests from the client
   def handle_in("ping", payload, socket) do

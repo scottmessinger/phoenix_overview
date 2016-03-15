@@ -9,8 +9,8 @@ defmodule Docs.Message do
     timestamps
   end
 
-  @required_fields ~w(body username)
-  @optional_fields ~w()
+  @required_fields ~w(body)
+  @optional_fields ~w(username)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
